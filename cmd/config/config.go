@@ -10,7 +10,7 @@ import (
 var ConfigCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Configure the sun CLI",
-	Long: `Configure the sun CLI.`,
+	Long: `Configure the sun CLI. Default prints the current configuration.`,
 	Run: config,
 }
 
