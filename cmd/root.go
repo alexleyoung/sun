@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 	Short: "CLI to quickly get weather information",
 	Long: 
 `Sun is a CLI to quickly get weather information.
-It can be used to quickly get weather information for a specific location or for the current location. 
+Run 'sun init' to get started.
 `,
 }
 
