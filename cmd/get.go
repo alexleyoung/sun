@@ -45,7 +45,6 @@ func getWeather(cmd *cobra.Command, args []string) {
 		return
 	}
 	defer res.Body.Close()
-	fmt.Println("Status:", res.Status)
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
@@ -61,7 +60,7 @@ func getWeather(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	fmt.Println(weather.Current.TempC)
+	fmt.Println(weather.Current.TempF)
 }
 
 func init() {
