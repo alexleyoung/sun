@@ -24,20 +24,10 @@ var getCmd = &cobra.Command{
 
 func getWeather(cmd *cobra.Command, args []string) {
 	// if no api key set, prompt user for api key
-	if viper.Get("apiKey") == "" {
-		fmt.Print("Enter API key: ")
-		var apiKey string
-		fmt.Scanln(&apiKey)
-		viper.Set("apiKey", apiKey)
+	if viper.Get("apiKey") == "" || viper.GetString("location") == "" {
+		fmt.Println("Error: No API key or Location set. Please run `sun config set` to set your API key and location.")
+		return
 	}
-
-	// if no location set, prompt user for location
-	if viper.Get("location") == "" {
-		fmt.Print("Enter Location (zip OR city OR state OR country): ")
-		var location string
-		fmt.Scanln(&location)
-		viper.Set("location", location)
-	} 
 
 	location := viper.Get("location")
 	apiKey := viper.Get("apiKey")
@@ -48,6 +38,11 @@ func getWeather(cmd *cobra.Command, args []string) {
 		return
 	}
 	defer res.Body.Close()
+
+	if res.StatusCode != 200 {
+		fmt.Println("Error: Request failed with status code", res.StatusCode)
+		return
+	}
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {

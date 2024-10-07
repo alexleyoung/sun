@@ -4,7 +4,6 @@ Copyright © 2024 Alex Young <>
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"alexleyoung/sun/cmd/config"
@@ -36,8 +35,6 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.AddCommand(config.ConfigCmd)
-
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func initConfig() {
@@ -45,9 +42,11 @@ func initConfig() {
     viper.SetConfigName("config")
     viper.SetConfigType("yaml")
     viper.AddConfigPath(".")
+	if err := viper.ReadInConfig(); err != nil {
+		viper.Set("apiKey", "")
+		viper.Set("location", "")
+		viper.Set("unit", "metric")
+		viper.SafeWriteConfig()
+	}
     viper.AutomaticEnv()
-
-    if err := viper.ReadInConfig(); err != nil {
-        fmt.Println("No config file found, using defaults")
-    }
 }

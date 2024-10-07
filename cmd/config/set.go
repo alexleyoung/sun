@@ -30,6 +30,7 @@ func set(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	// Check if the value for unit is valid
 	if viper.Get(key) == "unit" {
 		if value != "metric" && value != "imperial" {
 			fmt.Println("Error: Invalid unit. Must be either metric or imperial")

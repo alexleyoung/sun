@@ -15,9 +15,9 @@ var ConfigCmd = &cobra.Command{
 }
 
 func config(cmd *cobra.Command, args []string) {
-	fmt.Println("Configuration file:", viper.ConfigFileUsed())
 	fmt.Println("API key:", viper.GetString("apiKey"))
 	fmt.Println("Location:", viper.GetString("location"))
+	fmt.Println("Unit:", viper.GetString("unit"))
 }
 
 func init() {
