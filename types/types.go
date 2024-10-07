@@ -16,7 +16,7 @@ type Weather struct {
 		LastUpdated      string `json:"last_updated"`
 		TempC            float64 `json:"temp_c"`
 		TempF            float64 `json:"temp_f"`
-		IsDay            int     `json:"is_day"` // Changed to int based on the JSON (0 or 1)
+		IsDay            int     `json:"is_day"`
 		Condition struct {
 			Text string `json:"text"`
 			Icon string `json:"icon"`
