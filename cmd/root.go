@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"os"
 
+	"alexleyoung/sun/cmd/config"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -32,6 +34,8 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+
+	rootCmd.AddCommand(config.ConfigCmd)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

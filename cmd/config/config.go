@@ -19,3 +19,7 @@ func config(cmd *cobra.Command, args []string) {
 	fmt.Println("API key:", viper.GetString("apiKey"))
 	fmt.Println("Location:", viper.GetString("location"))
 }
+
+func init() {
+	// ConfigCmd.addCommand(set)
+}
