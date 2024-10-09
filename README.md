@@ -74,7 +74,7 @@ cd sun
 go build
 ```
 
-4. install the executable:
+4. Install the executable:
 
 ```bash
 go install

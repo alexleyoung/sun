@@ -1,58 +1,42 @@
-package cmd
+package get
 
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
 	"alexleyoung/sun/types"
+	"alexleyoung/sun/utils"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-var getCmd = &cobra.Command{
+var GetCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get weather information",
 	Long: `Get weather information for the current location or for an arbitrary location.`, 
-	Run: getWeather,
+	Run: getDefault,
 }
 
-func getWeather(cmd *cobra.Command, args []string) {
-	// if no api key set, prompt user for api key
-	if viper.Get("apiKey") == "" || viper.GetString("location") == "" {
-		fmt.Println("Error: No API key or Location set. Please run `sun config set` to set your API key and location.")
-		return
-	}
-
+func getDefault(cmd *cobra.Command, args []string) {
+	// if no api key set, panic
 	location := viper.Get("location")
 	apiKey := viper.Get("apiKey")
+	apiKeyStr, ok1 := apiKey.(string)
+    locationStr, ok2 := location.(string)
 
-	res, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/forecast.json?key=%s&q=%s", apiKey, location))
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	defer res.Body.Close()
+    if !ok1 || !ok2 {
+        panic("apiKey and location must both be strings")
+    }
 
-	if res.StatusCode != 200 {
-		fmt.Println("Error: Request failed with status code", res.StatusCode)
-		return
-	}
-
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
+	body := utils.GetWeatherRestOfDay(apiKeyStr, locationStr)
 
 	var weather types.Weather
 
-	err = json.Unmarshal(body, &weather)
+	err := json.Unmarshal(body, &weather)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
@@ -104,6 +88,3 @@ func getWeather(cmd *cobra.Command, args []string) {
 	}
 }
 
-func init() {
-	rootCmd.AddCommand(getCmd)
-}

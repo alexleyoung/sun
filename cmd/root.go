@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"alexleyoung/sun/cmd/config"
+	"alexleyoung/sun/cmd/get"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -35,6 +36,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.AddCommand(config.ConfigCmd)
+	rootCmd.AddCommand(get.GetCmd)
 }
 
 func initConfig() {

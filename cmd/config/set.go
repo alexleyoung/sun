@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -30,8 +31,27 @@ func set(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	if key == "apiKey" {
+		if reflect.TypeOf(value).Kind() != reflect.String {
+			fmt.Println("Error: Invalid API key. Must be a string")
+			return
+		}
+		if len(value) != 30 {
+			fmt.Println("Error: Invalid API key. Must be 30 characters long")
+			return
+		}
+	}
+	
+	// Check if the value for location is valid
+	if key == "location" {
+		if reflect.TypeOf(value).Kind() != reflect.String {
+			fmt.Println("Error: Invalid location. Must be a string")
+			return
+		}
+	}
+
 	// Check if the value for unit is valid
-	if viper.Get(key) == "unit" {
+	if key == "unit" {
 		if value != "metric" && value != "imperial" {
 			fmt.Println("Error: Invalid unit. Must be either metric or imperial")
 			return
