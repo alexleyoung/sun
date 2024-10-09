@@ -1,6 +1,13 @@
 package types
 
-type Weather struct {
+type Error struct {
+	E struct {
+		Code int `json:"code"`
+		Message string `json:"message"`
+	} `json:"error"`
+}
+
+type Forecast struct {
 	Location struct {
 		Name            string  `json:"name"`
 		Region          string  `json:"region"`
