@@ -1,13 +1,12 @@
 package get
 
 import (
-	"alexleyoung/sun/types"
-	"alexleyoung/sun/utils"
-	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
 	"time"
+
+	"alexleyoung/sun/utils"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -32,14 +31,12 @@ func getForecast(cmd *cobra.Command, args []string) {
 		panic("apiKey must be a string")
 	}
 
-	forecastBody := utils.GetForecast(apiKey, location, days)
-
-	var forecast types.Forecast
-
-	err := json.Unmarshal(forecastBody, &forecast)
-	if err != nil {
-		panic(err)
+	if location == "" {
+		fmt.Print("Set a default location or use the -l flag to specify a location.")
+		return
 	}
+
+	forecast := utils.GetForecast(apiKey, location, days)
 
 	for day := range forecast.Forecast.Forecastday {
 		if day == 0 {
@@ -100,7 +97,7 @@ func init() {
 	if !ok {
 		locStr = ""
 	}
-	
+
 	forecastCmd.Flags().StringVarP(&location, "location", "l", locStr, "Location to get forecast for")
 	forecastCmd.Flags().IntVarP(&days, "days", "d", 1, "Number of days to get forecast for")
 
