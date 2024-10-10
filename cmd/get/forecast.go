@@ -46,15 +46,23 @@ func getForecast(cmd *cobra.Command, args []string) {
 		} else {
 			fmt.Println("Day " + strconv.Itoa(day+1) + ":")
 		}
+
+		// Print high and low temperatures
+		lowTemp := forecast.Forecast.Forecastday[day].Day.MinTempF
+		highTemp := forecast.Forecast.Forecastday[day].Day.MaxTempF
+		fmt.Printf("Low: %.1f°F\nHigh: %.1f°F\n\n", lowTemp, highTemp)
+
 		for hour := range forecast.Forecast.Forecastday[day].Hour {
 			hourInfo := forecast.Forecast.Forecastday[day].Hour[hour]
+
+			// get timezone of weather location
 			location, err := time.LoadLocation(forecast.Location.TzID)
 			if err != nil {
 				fmt.Println("Error:", err)
 				return
 			}
 	
-			// Get the current hour
+			// Get the current hour in the timezone of the weather location
 			currentHour, err := strconv.ParseInt((time.Now().In(location).Format("15:04")[0:2]), 10, 0)
 	
 			if err != nil {
