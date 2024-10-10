@@ -8,6 +8,7 @@ import (
 
 	"alexleyoung/sun/utils"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -36,15 +37,19 @@ func getForecast(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	if days < 1 || days > 14 {
+		fmt.Println("Number of days must be between 1 and 14.")
+		return
+	}
 	forecast := utils.GetForecast(apiKey, location, days)
 
 	for day := range forecast.Forecast.Forecastday {
 		if day == 0 {
-			fmt.Println("Today:")
+			color.Cyan("Today:")
 		} else if day == 1 {
-			fmt.Println("Tomorrow:")
+			color.Cyan("Tomorrow:")
 		} else {
-			fmt.Println("Day " + strconv.Itoa(day+1) + ":")
+			color.Cyan("Day " + strconv.Itoa(day+1) + ":")
 		}
 
 		// Print high and low temperatures
@@ -52,6 +57,7 @@ func getForecast(cmd *cobra.Command, args []string) {
 		highTemp := forecast.Forecast.Forecastday[day].Day.MaxTempF
 		fmt.Printf("Low: %.1f°F\nHigh: %.1f°F\n\n", lowTemp, highTemp)
 
+		color.Yellow("Forecast:")
 		for hour := range forecast.Forecast.Forecastday[day].Hour {
 			hourInfo := forecast.Forecast.Forecastday[day].Hour[hour]
 
@@ -86,12 +92,15 @@ func getForecast(cmd *cobra.Command, args []string) {
 			// Format the forecast message
 			message := fmt.Sprintf("%s: %.1f°F", hourTimeObj.Format("3:04 PM"), hourInfo.TempF)
 			if hourInfo.WillItRain == 1 {
-				message += " It will rain!\n"
+				color.Set(color.FgCyan)
+				message += " - It will rain!"
 			} else if hourInfo.WillItSnow == 1 {
-				message += " It will snow!\n"
+				color.Set(color.FgHiWhite)
+				message += " - It will snow!"
 			}
 			fmt.Println(message)
 		}
+		fmt.Println()
 	}
 }
 
