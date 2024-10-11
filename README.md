@@ -1,6 +1,6 @@
 # Sun CLI
 
-Sun CLI is a command-line tool designed for quickly fetching weather information for a specified location.
+Sun CLI is a command-line tool designed for quickly fetching weather information.
 
 ## Available Commands
 
