@@ -49,6 +49,36 @@ Get weather information for the current location or for an arbitrary location. T
 sun get
 ```
 
+**Available Commands:**
+
+- `forecast`
+
+  Get the forecast for the current location or for an arbitrary location. Flags:
+
+  - `-l, --location`: Location to get forecast for. Default is the currently set location.
+  - `-d, --days`: Number of days to get forecast for. Default is 1.
+
+  **Usage:**
+
+  ```bash
+  sun get forecast
+  sun get forecast -l "New York"
+  sun get forecast -d 7
+  ```
+
+- `alerts`
+
+  Get weather alerts for the current location or for an arbitrary location. Flags:
+
+  - `-l, --location`: Location to get alerts for. Default is the currently set location.
+
+  **Usage:**
+
+  ```bash
+  sun get alerts
+  sun get alerts -l "New York"
+  ```
+
 # Requirements:
 
 - Go 1.22.1
