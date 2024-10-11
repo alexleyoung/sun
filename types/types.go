@@ -7,6 +7,13 @@ type Error struct {
 	} `json:"error"`
 }
 
+type ForecastResponse struct {
+	Location Location `json:"location"`
+	Current Current `json:"current"`
+	Forecast Forecast `json:"forecast"`
+}
+
+
 type Location struct {
 	Name            string  `json:"name"`
 	Region          string  `json:"region"`
@@ -136,13 +143,7 @@ type Forecastday []struct {
 }
 
 type Forecast struct {
-	Forecastday Forecastday`json:"forecast"`
-}
-
-type ForecastResponse struct {
-	Location Location `json:"location"`
-	Current Current `json:"current"`
-	Forecast Forecast `json:"forecast"`
+	Forecastday Forecastday `json:"forecastday"`
 }
 
 type Alert struct {

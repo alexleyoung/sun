@@ -1,11 +1,12 @@
 package utils
 
 import (
-	"alexleyoung/sun/types"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+
+	"alexleyoung/sun/types"
 )
 
 func GetForecast(apiKey string, location string, days int) types.ForecastResponse {

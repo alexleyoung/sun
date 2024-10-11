@@ -38,8 +38,8 @@ func getForecast(cmd *cobra.Command, args []string) {
 	if days < 1 || days > 14 {
 		fmt.Println("Number of days must be between 1 and 14.")
 		return
-	}
-	
+		}
+		
 	forecast := utils.GetForecast(apiKey, location, days)
 	now := time.Now()
 
