@@ -163,5 +163,7 @@ type Alert struct {
 
 type AlertsResponse struct {
 	Location Location `json:"location"`
-	Alerts []Alert `json:"alerts"`
+	Alerts struct {
+		Alert []Alert `json:"alert"`
+	} `json:"alerts"`
 }

@@ -5,6 +5,7 @@ import (
 
 	"alexleyoung/sun/utils"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -29,7 +30,16 @@ func getAlerts(cmd *cobra.Command, args []string) {
 		return
 	}
 	
-	utils.GetAlerts(apiKey, location)
+	alerts := utils.GetAlerts(apiKey, location)
+
+	if len(alerts.Alerts.Alert) == 0 {
+		fmt.Println("No current alerts.")
+		return
+	}
+
+	for _, alert := range alerts.Alerts.Alert {
+		color.Red(alert.Headline)
+	}
 }
 
 func init() {

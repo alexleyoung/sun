@@ -29,17 +29,17 @@ func GetForecast(apiKey string, location string, days int) types.ForecastRespons
 		}
 	}
 
-	var forecast types.ForecastResponse
+	var forecastResponse types.ForecastResponse
 
-	err = json.Unmarshal(body, &forecast)
+	err = json.Unmarshal(body, &forecastResponse)
 	if err != nil {
 		panic(err)
 	}
 
-	return forecast
+	return forecastResponse
 }
 
-func GetAlerts(apiKey string, location string) {
+func GetAlerts(apiKey string, location string) types.AlertsResponse {
 	res, err := http.Get(fmt.Sprintf("http://api.weatherapi.com/v1/alerts.json?key=%s&q=%s", apiKey, location))
 	if err != nil {
 		panic(err)
@@ -60,14 +60,12 @@ func GetAlerts(apiKey string, location string) {
 		}
 	}
 
-	fmt.Println(string(body))
+	var alertResponse types.AlertsResponse
 
-	// var alerts types.Alerts
+	err = json.Unmarshal(body, &alertResponse)
+	if err != nil {
+		panic(err)
+	}
 
-	// err = json.Unmarshal(body, &alerts)
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// return alerts
+	return alertResponse
 }
