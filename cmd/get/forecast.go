@@ -31,25 +31,25 @@ func getForecast(cmd *cobra.Command, args []string) {
 	if !ok1 {
 		panic("apiKey must be a string")
 	}
-
 	if location == "" {
 		fmt.Print("Set a default location or use the -l flag to specify a location.")
 		return
 	}
-
 	if days < 1 || days > 14 {
 		fmt.Println("Number of days must be between 1 and 14.")
 		return
 	}
+	
 	forecast := utils.GetForecast(apiKey, location, days)
+	now := time.Now()
 
 	for day := range forecast.Forecast.Forecastday {
 		if day == 0 {
-			color.Cyan("Today:")
+			color.HiRed("Today:")
 		} else if day == 1 {
-			color.Cyan("Tomorrow:")
+			color.HiRed("Tomorrow:")
 		} else {
-			color.Cyan("Day " + strconv.Itoa(day+1) + ":")
+			color.HiRed("Day " + strconv.Itoa(day+1) + ":")
 		}
 
 		// Print high and low temperatures
@@ -61,23 +61,7 @@ func getForecast(cmd *cobra.Command, args []string) {
 		for hour := range forecast.Forecast.Forecastday[day].Hour {
 			hourInfo := forecast.Forecast.Forecastday[day].Hour[hour]
 
-			// get timezone of weather location
-			location, err := time.LoadLocation(forecast.Location.TzID)
-			if err != nil {
-				fmt.Println("Error:", err)
-				return
-			}
-	
-			// Get the current hour in the timezone of the weather location
-			currentHour, err := strconv.ParseInt((time.Now().In(location).Format("15:04")[0:2]), 10, 0)
-	
-			if err != nil {
-				fmt.Println("Error:", err)
-				return
-			}
-	
-			// If the current hour is greater than the hour we are iterating through, skip it
-			if currentHour > int64(hour) {
+			if now.Unix() > hourInfo.TimeEpoch {
 				continue
 			}
 	
