@@ -61,7 +61,7 @@ func getForecast(cmd *cobra.Command, args []string) {
 		for hour := range forecast.Forecast.Forecastday[day].Hour {
 			hourInfo := forecast.Forecast.Forecastday[day].Hour[hour]
 
-			if now.Unix() > hourInfo.TimeEpoch {
+			if now.Unix() > hourInfo.TimeEpoch && hour < now.Hour() {
 				continue
 			}
 	
@@ -91,6 +91,7 @@ func getForecast(cmd *cobra.Command, args []string) {
 func init() {
 	viper.SetConfigName("config")
     viper.SetConfigType("yaml")
+	viper.AddConfigPath("$HOME/.sun")
     viper.AddConfigPath(".")
 	viper.ReadInConfig()
 	loc := viper.Get("location")
