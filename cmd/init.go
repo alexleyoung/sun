@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"alexleyoung/sun/utils"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -40,5 +41,7 @@ func startInitFlow(cmd *cobra.Command, args []string) {
 }
 
 func init() {
+	utils.InitConfig()
+	
 	rootCmd.AddCommand(initCmd)
 }
