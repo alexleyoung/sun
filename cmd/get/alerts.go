@@ -44,9 +44,6 @@ func getAlerts(cmd *cobra.Command, args []string) {
 }
 
 func init() {
-	viper.SetConfigName("config")
-    viper.SetConfigType("yaml")
-    viper.AddConfigPath(".")
 	viper.ReadInConfig()
 	loc := viper.Get("location")
 	locStr, ok := loc.(string)

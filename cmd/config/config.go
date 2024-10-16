@@ -19,7 +19,3 @@ func config(cmd *cobra.Command, args []string) {
 	fmt.Println("Location:", viper.GetString("location"))
 	fmt.Println("Unit:", viper.GetString("unit"))
 }
-
-func init() {
-	// ConfigCmd.addCommand(set)
-}

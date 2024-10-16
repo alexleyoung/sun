@@ -89,18 +89,11 @@ func getForecast(cmd *cobra.Command, args []string) {
 }
 
 func init() {
-	viper.SetConfigName("config")
-    viper.SetConfigType("yaml")
-	viper.AddConfigPath("$HOME/.sun")
-    viper.AddConfigPath(".")
-	viper.ReadInConfig()
-	loc := viper.Get("location")
-	locStr, ok := loc.(string)
-	if !ok {
-		locStr = ""
-	}
+	err := viper.ReadInConfig()
+	cobra.CheckErr(err)
+	loc := viper.GetString("location")
 
-	forecastCmd.Flags().StringVarP(&location, "location", "l", locStr, "Location to get forecast for")
+	forecastCmd.Flags().StringVarP(&location, "location", "l", loc, "Location to get forecast for")
 	forecastCmd.Flags().IntVarP(&days, "days", "d", 1, "Number of days to get forecast for")
 
 	GetCmd.AddCommand(forecastCmd)

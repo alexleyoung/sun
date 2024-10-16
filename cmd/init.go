@@ -30,7 +30,10 @@ func startInitFlow(cmd *cobra.Command, args []string) {
 	// Set the API key and location in the config
 	viper.Set("apiKey", apiKey)
 	viper.Set("location", location)
-	viper.WriteConfig()
+	err := viper.WriteConfig()
+	if err != nil {
+		panic(err)
+	}
 
 	// Print a success message
 	println("Successfully initialized the sun CLI!")
