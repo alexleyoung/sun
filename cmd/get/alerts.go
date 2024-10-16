@@ -31,7 +31,6 @@ func getAlerts(cmd *cobra.Command, args []string) {
 	}
 	
 	alerts := utils.GetAlerts(apiKey, location)
-	fmt.Print(alerts)
 
 	if len(alerts.Alerts.Alert) == 0 {
 		fmt.Println("No current alerts.")
